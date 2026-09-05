@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scar Hill Solutions | Enterprise Salesforce Architecture, AI Strategy & IT Advisory</title>
+  <meta name="description" content="Senior technical advisory, 13x certified Salesforce enterprise architecture, pragmatic AI use-case discovery and custom software, and small-business IT security." />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf9',
+              100: '#ccfbef',
+              400: '#2ec49a',
+              500: '#22ad86',
+              600: '#178c6c',
+            },
+            surface: {
+              950: '#080b11',
+              900: '#0e131f',
+              850: '#141c2e',
+              800: '#1c263c',
+              750: '#23304d',
+              700: '#2c3c60'
+            },
+            badge: {
+              gold: '#f59e0b',
+              blue: '#38bdf8',
+              violet: '#a855f7',
+              emerald: '#10b981'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'Menlo', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .bg-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    }
+    .hero-glow {
+      box-shadow: 0 0 60px -15px rgba(16, 185, 129, 0.22);
+    }
+    .badge-glow {
+      box-shadow: 0 0 25px -5px rgba(56, 189, 248, 0.15);
+    }
+  </style>
+</head>
+<body class="bg-surface-950 text-slate-200 font-sans antialiased selection:bg-brand-500 selection:text-surface-950">
+
+  <!-- Header / Navigation -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-surface-950/85 border-b border-slate-800/80">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3 group">
+        <!-- Brand Logo -->
+        <div class="flex items-center justify-center transition-transform group-hover:scale-105">
+          <img 
+            src="ScarHillSolutions.png" 
+            alt="Scar Hill Solutions" 
+            class="site-logo h-9 w-auto object-contain"
+            onerror="handleLogoError(this, 'header')" 
+          />
+        </div>
+        <span class="text-sm font-semibold tracking-tight text-white hidden sm:inline-block">Scar Hill <span class="text-brand-400 font-normal">Solutions</span></span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+        <a href="#services" class="hover:text-white transition-colors">Specialties</a>
+        <a href="#credentials" class="hover:text-white transition-colors">Certifications</a>
+        <a href="#engagements" class="hover:text-white transition-colors">Engagements</a>
+        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+      </nav>
+
+      <div>
+        <a href="#contact" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-surface-950 bg-brand-400 hover:bg-brand-500 rounded-md transition-all shadow-sm">
+          <span>Get in Touch</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative bg-grid border-b border-slate-800/80 pt-20 pb-20 md:pt-28 md:pb-24 overflow-hidden">
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+      
+      <!-- Brand Logo Feature in Hero -->
+      <div class="relative inline-flex flex-col items-center justify-center mb-6 group cursor-pointer" onclick="document.getElementById('logo-file-picker').click()" title="Click to preview your local logo file in this canvas">
+        <img 
+          id="hero-logo-img"
+          src="ScarHillSolutions2_2.png" 
+          alt="Scar Hill Solutions Logo" 
+          class="site-logo w-56 sm:w-64 h-auto object-contain drop-shadow-[0_0_35px_rgba(46,196,154,0.28)] transition-transform hover:scale-[1.02]"
+          onerror="handleLogoError(this, 'hero')" 
+        />
+        <!-- Subtle in-canvas helper badge if viewed prior to GitHub upload -->
+        <div id="preview-hint" class="hidden mt-2 text-[11px] font-mono text-slate-400 bg-surface-900 border border-slate-700/80 px-2.5 py-1 rounded-full group-hover:border-brand-400/60 transition">
+          <span class="text-brand-400">&uarr;</span> Click to preview <span class="text-slate-300">ScarHillSolutions2_2.png</span> in canvas
+        </div>
+        <!-- Hidden file input for live canvas preview -->
+        <input type="file" id="logo-file-picker" accept="image/*" class="hidden" onchange="previewLocalLogo(this)" />
+      </div>
+
+      <div class="block">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-900 border border-slate-700/80 text-brand-400 text-xs font-mono mb-6">
+          <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
+          Salesforce Architecture &bull; Pragmatic AI Consulting &bull; IT Strategy
+        </div>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.15] max-w-4xl mx-auto mb-6">
+        Enterprise architecture rigor. Practical execution for growing teams.
+      </h1>
+
+      <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10">
+        13x certified Salesforce Architect and 20-year enterprise technology veteran. Partnering directly with businesses to architect CRM systems, uncover high-ROI AI opportunities, and strengthen IT security.
+      </p>
+
+      <!-- CTA buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#contact" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-surface-950 bg-brand-400 hover:bg-brand-500 rounded-lg transition-all shadow-lg hover:shadow-brand-500/20">
+          <i data-lucide="mail" class="w-4 h-4"></i>
+          Discuss Your Project
+        </a>
+        <a href="#credentials" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-slate-300 hover:text-white bg-surface-900 hover:bg-surface-850 border border-slate-700/80 rounded-lg transition-colors">
+          View Certifications
+        </a>
+      </div>
+
+      <!-- Metric Highlights -->
+      <div class="mt-16 pt-10 border-t border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-6 text-left">
+        <div>
+          <div class="text-white font-mono font-bold text-lg flex items-center gap-1.5">
+            <i data-lucide="award" class="w-4 h-4 text-brand-400"></i>
+            13x Certified
+          </div>
+          <div class="text-slate-400 text-xs mt-1">System, Application, Integration & IAM Architect credentials.</div>
+        </div>
+        <div>
+          <div class="text-white font-mono font-bold text-lg flex items-center gap-1.5">
+            <i data-lucide="cpu" class="w-4 h-4 text-brand-400"></i>
+            Actionable AI
+          </div>
+          <div class="text-slate-400 text-xs mt-1">Uncovering genuine business ROI, building prototypes & Claude workflows.</div>
+        </div>
+        <div>
+          <div class="text-white font-mono font-bold text-lg flex items-center gap-1.5">
+            <i data-lucide="shield" class="w-4 h-4 text-brand-400"></i>
+            20 Years Depth
+          </div>
+          <div class="text-slate-400 text-xs mt-1">Two decades leading enterprise software, security posture, and delivery.</div>
+        </div>
+        <div>
+          <div class="text-white font-mono font-bold text-lg flex items-center gap-1.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i>
+            Principal Access
+          </div>
+          <div class="text-slate-400 text-xs mt-1">Direct partnership with a senior architect—no junior account handoffs.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Capabilities Section -->
+  <section id="services" class="py-24 border-b border-slate-800/80">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-2xl mb-16">
+        <span class="text-brand-400 text-xs font-mono uppercase tracking-widest block mb-2">Capabilities</span>
+        <h2 class="text-3xl font-bold text-white tracking-tight">Focused, high-impact specialties.</h2>
+        <p class="text-slate-400 mt-3 text-base">
+          Merging enterprise CRM engineering with pragmatic AI adoption to eliminate technical debt, safeguard data, and deliver durable software.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Service Card 1: Salesforce Architecture -->
+        <div class="bg-surface-900 border border-slate-800 rounded-xl p-7 hover:border-slate-700 transition-all hover:-translate-y-1 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-surface-850 border border-slate-700/80 flex items-center justify-center text-brand-400 mb-5">
+              <i data-lucide="layers" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Enterprise Salesforce Architecture</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+              Comprehensive technical design across Sales Cloud, Service Cloud, Experience Cloud, NPSP, and EDA. Scalable Apex patterns, trigger handler frameworks, and dynamic form strategies.
+            </p>
+          </div>
+          <ul class="text-xs font-mono text-slate-400 space-y-1.5 border-t border-slate-800/80 pt-4">
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> Multi-Org Strategy & Governance</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> Platform Limits & Large Data Volumes (LDV)</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> Technical Debt & Performance Diagnostics</li>
+          </ul>
+        </div>
+
+        <!-- Service Card 2: AI Consulting & Custom Software -->
+        <div class="bg-surface-900 border border-slate-800 rounded-xl p-7 hover:border-slate-700 transition-all hover:-translate-y-1 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-surface-850 border border-slate-700/80 flex items-center justify-center text-brand-400 mb-5">
+              <i data-lucide="bot" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">AI Strategy & Custom Software</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+              Helping teams cut through AI noise to identify high-value use cases. From readiness assessments to custom software prototypes, agentic workflows, Claude tooling, and RAG knowledge retrieval.
+            </p>
+          </div>
+          <ul class="text-xs font-mono text-slate-400 space-y-1.5 border-t border-slate-800/80 pt-4">
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> AI Opportunity Discovery & ROI Assessment</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> Bespoke Software & Claude Integrations</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> Agentforce & Autonomous Agent Prototyping</li>
+          </ul>
+        </div>
+
+        <!-- Service Card 3: IT Security & IAM -->
+        <div class="bg-surface-900 border border-slate-800 rounded-xl p-7 hover:border-slate-700 transition-all hover:-translate-y-1 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-surface-850 border border-slate-700/80 flex items-center justify-center text-brand-400 mb-5">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Pragmatic IT Security & IAM</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+              Practical security posture built around CIS controls, granular Identity & Access Management (IAM), SSO, and least-privilege permission models that protect without stalling operations.
+            </p>
+          </div>
+          <ul class="text-xs font-mono text-slate-400 space-y-1.5 border-t border-slate-800/80 pt-4">
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> Sharing Models & Field-Level Security</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> CIS Controls & Baseline Hardening</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> Small Business Security Audits & Hygiene</li>
+          </ul>
+        </div>
+
+        <!-- Service Card 4: Integration Architecture -->
+        <div class="bg-surface-900 border border-slate-800 rounded-xl p-7 hover:border-slate-700 transition-all hover:-translate-y-1 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-surface-850 border border-slate-700/80 flex items-center justify-center text-brand-400 mb-5">
+              <i data-lucide="arrow-left-right" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Integration & Data Architecture</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+              Designing durable integrations between Salesforce and third-party systems via REST/SOAP APIs, Streaming API, and Platform Events with robust error handling and idempotency.
+            </p>
+          </div>
+          <ul class="text-xs font-mono text-slate-400 space-y-1.5 border-t border-slate-800/80 pt-4">
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> API Architecture & Middleware Strategy</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> Data Modeling, ERD Design & Migration</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> Event-Driven Synchronization Patterns</li>
+          </ul>
+        </div>
+
+        <!-- Service Card 5: Technology Strategy & Advisory -->
+        <div class="bg-surface-900 border border-slate-800 rounded-xl p-7 hover:border-slate-700 transition-all hover:-translate-y-1 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-surface-850 border border-slate-700/80 flex items-center justify-center text-brand-400 mb-5">
+              <i data-lucide="compass" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Technology Strategy & Advisory</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+              Unbiased, practical guidance for founders and leadership teams. Evaluating buy-versus-build decisions, vetting software vendors, and preventing costly technical missteps.
+            </p>
+          </div>
+          <ul class="text-xs font-mono text-slate-400 space-y-1.5 border-t border-slate-800/80 pt-4">
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> Software Buy vs. Build Evaluations</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> Small Business Stack Assessments</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> Architectural Sounding Board</li>
+          </ul>
+        </div>
+
+        <!-- Service Card 6: Release Governance & SDLC -->
+        <div class="bg-surface-900 border border-slate-800 rounded-xl p-7 hover:border-slate-700 transition-all hover:-translate-y-1 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-surface-850 border border-slate-700/80 flex items-center justify-center text-brand-400 mb-5">
+              <i data-lucide="git-merge" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">DevOps & Release Governance</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+              Replacing haphazard manual production updates with disciplined release pipelines using Salesforce DevOps Center, GitHub version control, and tested branching workflows.
+            </p>
+          </div>
+          <ul class="text-xs font-mono text-slate-400 space-y-1.5 border-t border-slate-800/80 pt-4">
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> GitHub & Version-Controlled Pipelines</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> Sandbox Strategies & Testing Discipline</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400">&bullet;</span> Agile Delivery & Scrum Process Alignment</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications Showcase Section -->
+  <section id="credentials" class="py-24 border-b border-slate-800/80 bg-surface-900/50">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-3xl mb-14">
+        <span class="text-brand-400 text-xs font-mono uppercase tracking-widest block mb-2">Verified Qualifications</span>
+        <h2 class="text-3xl font-bold text-white tracking-tight">Certifications & Accreditations</h2>
+        <p class="text-slate-400 mt-2 text-sm leading-relaxed">
+          Comprehensive credentials spanning enterprise architecture domains, technical platform development, applied AI, and agile leadership.
+        </p>
+      </div>
+
+      <!-- Architect Tier -->
+      <div class="mb-10">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="px-2.5 py-1 rounded bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono font-semibold tracking-wide uppercase">
+            Architect Tier &bull; Salesforce Certified
+          </span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- System Architect -->
+          <div class="bg-surface-850 border border-amber-500/30 rounded-xl p-4 flex items-start gap-3 hover:border-amber-500/60 transition-colors">
+            <div class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shrink-0">
+              <i data-lucide="shield-alert" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="text-xs text-amber-400/90 font-mono uppercase tracking-wider">Top Tier</div>
+              <h4 class="text-sm font-semibold text-white mt-0.5 leading-snug">System Architect</h4>
+              <p class="text-[11px] text-slate-400 mt-1">Integration, IAM & Dev Lifecycle mastery.</p>
+            </div>
+          </div>
+
+          <!-- Application Architect -->
+          <div class="bg-surface-850 border border-amber-500/30 rounded-xl p-4 flex items-start gap-3 hover:border-amber-500/60 transition-colors">
+            <div class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shrink-0">
+              <i data-lucide="layout-grid" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="text-xs text-amber-400/90 font-mono uppercase tracking-wider">Top Tier</div>
+              <h4 class="text-sm font-semibold text-white mt-0.5 leading-snug">Application Architect</h4>
+              <p class="text-[11px] text-slate-400 mt-1">Data architecture, sharing & declarative build.</p>
+            </div>
+          </div>
+
+          <!-- Integration Architect -->
+          <div class="bg-surface-850 border border-slate-700/80 rounded-xl p-4 flex items-start gap-3 hover:border-brand-500/50 transition-colors">
+            <div class="w-9 h-9 rounded-lg bg-surface-800 border border-slate-700 flex items-center justify-center text-brand-400 shrink-0">
+              <i data-lucide="network" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="text-xs text-slate-400 font-mono uppercase tracking-wider">Domain Specialist</div>
+              <h4 class="text-sm font-semibold text-white mt-0.5 leading-snug">Integration Architect</h4>
+              <p class="text-[11px] text-slate-400 mt-1">APIs, middleware & real-time sync.</p>
+            </div>
+          </div>
+
+          <!-- Identity & Access Architect -->
+          <div class="bg-surface-850 border border-slate-700/80 rounded-xl p-4 flex items-start gap-3 hover:border-brand-500/50 transition-colors">
+            <div class="w-9 h-9 rounded-lg bg-surface-800 border border-slate-700 flex items-center justify-center text-brand-400 shrink-0">
+              <i data-lucide="key-round" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="text-xs text-slate-400 font-mono uppercase tracking-wider">Domain Specialist</div>
+              <h4 class="text-sm font-semibold text-white mt-0.5 leading-snug">Identity & Access Architect</h4>
+              <p class="text-[11px] text-slate-400 mt-1">SSO, OAuth, MFA & access governance.</p>
+            </div>
+          </div>
+
+          <!-- Data Architecture Designer -->
+          <div class="bg-surface-850 border border-slate-700/80 rounded-xl p-4 flex items-start gap-3 hover:border-brand-500/50 transition-colors">
+            <div class="w-9 h-9 rounded-lg bg-surface-800 border border-slate-700 flex items-center justify-center text-brand-400 shrink-0">
+              <i data-lucide="database" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="text-xs text-slate-400 font-mono uppercase tracking-wider">Designer</div>
+              <h4 class="text-sm font-semibold text-white mt-0.5 leading-snug">Data Architecture Designer</h4>
+              <p class="text-[11px] text-slate-400 mt-1">LDV, ERDs, SOQL & data integrity.</p>
+            </div>
+          </div>
+
+          <!-- Sharing & Visibility Designer -->
+          <div class="bg-surface-850 border border-slate-700/80 rounded-xl p-4 flex items-start gap-3 hover:border-brand-500/50 transition-colors">
+            <div class="w-9 h-9 rounded-lg bg-surface-800 border border-slate-700 flex items-center justify-center text-brand-400 shrink-0">
+              <i data-lucide="eye" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="text-xs text-slate-400 font-mono uppercase tracking-wider">Designer</div>
+              <h4 class="text-sm font-semibold text-white mt-0.5 leading-snug">Sharing & Visibility Designer</h4>
+              <p class="text-[11px] text-slate-400 mt-1">Record security & hierarchy controls.</p>
+            </div>
+          </div>
+
+          <!-- Development Lifecycle Designer -->
+          <div class="bg-surface-850 border border-slate-700/80 rounded-xl p-4 flex items-start gap-3 hover:border-brand-500/50 transition-colors">
+            <div class="w-9 h-9 rounded-lg bg-surface-800 border border-slate-700 flex items-center justify-center text-brand-400 shrink-0">
+              <i data-lucide="git-branch" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="text-xs text-slate-400 font-mono uppercase tracking-wider">Designer</div>
+              <h4 class="text-sm font-semibold text-white mt-0.5 leading-snug">Dev Lifecycle Designer</h4>
+              <p class="text-[11px] text-slate-400 mt-1">Release governance & environment strategy.</p>
+            </div>
+          </div>
+
+          <!-- Salesforce AI Associate -->
+          <div class="bg-surface-850 border border-violet-500/30 rounded-xl p-4 flex items-start gap-3 hover:border-violet-500/60 transition-colors">
+            <div class="w-9 h-9 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 shrink-0">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="text-xs text-violet-400 font-mono uppercase tracking-wider">AI Credential</div>
+              <h4 class="text-sm font-semibold text-white mt-0.5 leading-snug">AI Associate</h4>
+              <p class="text-[11px] text-slate-400 mt-1">AI ethics, platform data & intelligence.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Development & Consulting Tier -->
+      <div class="mb-10">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="px-2.5 py-1 rounded bg-sky-500/10 border border-sky-500/30 text-sky-400 text-xs font-mono font-semibold tracking-wide uppercase">
+            Development & Platform &bull; Salesforce Certified
+          </span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+          <div class="bg-surface-850 border border-slate-800 rounded-lg p-3.5 hover:border-slate-700 transition">
+            <div class="text-[10px] font-mono text-sky-400 uppercase">Coding & Logic</div>
+            <div class="text-sm font-semibold text-white mt-0.5">Platform Developer I</div>
+            <div class="text-[11px] text-slate-400 mt-1">Apex, Triggers, SOQL & LWC.</div>
+          </div>
+
+          <div class="bg-surface-850 border border-slate-800 rounded-lg p-3.5 hover:border-slate-700 transition">
+            <div class="text-[10px] font-mono text-sky-400 uppercase">Declarative Build</div>
+            <div class="text-sm font-semibold text-white mt-0.5">Platform App Builder</div>
+            <div class="text-[11px] text-slate-400 mt-1">Custom data models & Flow logic.</div>
+          </div>
+
+          <div class="bg-surface-850 border border-slate-800 rounded-lg p-3.5 hover:border-slate-700 transition">
+            <div class="text-[10px] font-mono text-sky-400 uppercase">Cloud Consultant</div>
+            <div class="text-sm font-semibold text-white mt-0.5">Sales Cloud Consultant</div>
+            <div class="text-[11px] text-slate-400 mt-1">Opportunity, pipeline & sales UX.</div>
+          </div>
+
+          <div class="bg-surface-850 border border-slate-800 rounded-lg p-3.5 hover:border-slate-700 transition">
+            <div class="text-[10px] font-mono text-sky-400 uppercase">Cloud Consultant</div>
+            <div class="text-sm font-semibold text-white mt-0.5">Service Cloud Consultant</div>
+            <div class="text-[11px] text-slate-400 mt-1">Omni-Channel, case mgmt & SLAs.</div>
+          </div>
+
+          <div class="bg-surface-850 border border-slate-800 rounded-lg p-3.5 hover:border-slate-700 transition">
+            <div class="text-[10px] font-mono text-sky-400 uppercase">Platform Admin</div>
+            <div class="text-sm font-semibold text-white mt-0.5">Certified Administrator</div>
+            <div class="text-[11px] text-slate-400 mt-1">User setup, automation & hygiene.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agile & Community Recognition -->
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <span class="px-2.5 py-1 rounded bg-brand-400/10 border border-brand-400/30 text-brand-400 text-xs font-mono font-semibold tracking-wide uppercase">
+            Agile Leadership & Ecosystem Recognition
+          </span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+          <div class="bg-surface-850 border border-slate-800 rounded-lg p-3 text-center">
+            <i data-lucide="refresh-cw" class="w-4 h-4 text-brand-400 mx-auto mb-1.5"></i>
+            <div class="text-xs font-semibold text-white">Certified ScrumMaster</div>
+            <div class="text-[10px] text-slate-400 mt-0.5 font-mono">Scrum Alliance (CSM)</div>
+          </div>
+
+          <div class="bg-surface-850 border border-slate-800 rounded-lg p-3 text-center">
+            <i data-lucide="compass" class="w-4 h-4 text-brand-400 mx-auto mb-1.5"></i>
+            <div class="text-xs font-semibold text-white">Agile Leadership I</div>
+            <div class="text-[10px] text-slate-400 mt-0.5 font-mono">Scrum.org (PAL I)</div>
+          </div>
+
+          <div class="bg-surface-850 border border-slate-800 rounded-lg p-3 text-center">
+            <i data-lucide="zap" class="w-4 h-4 text-amber-400 mx-auto mb-1.5"></i>
+            <div class="text-xs font-semibold text-white">AgentBlazer Champion</div>
+            <div class="text-[10px] text-slate-400 mt-0.5 font-mono">Salesforce AI Community</div>
+          </div>
+
+          <div class="bg-surface-850 border border-slate-800 rounded-lg p-3 text-center">
+            <i data-lucide="lightbulb" class="w-4 h-4 text-amber-400 mx-auto mb-1.5"></i>
+            <div class="text-xs font-semibold text-white">AgentBlazer Innovator</div>
+            <div class="text-[10px] text-slate-400 mt-0.5 font-mono">Autonomous Agents</div>
+          </div>
+
+          <div class="bg-surface-850 border border-slate-800 rounded-lg p-3 text-center col-span-2 sm:col-span-1">
+            <i data-lucide="mountain" class="w-4 h-4 text-brand-400 mx-auto mb-1.5"></i>
+            <div class="text-xs font-semibold text-white">Trailhead Ranger</div>
+            <div class="text-[10px] text-slate-400 mt-0.5 font-mono">Continuous Mastery</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Engagements Section -->
+  <section id="engagements" class="py-24 border-b border-slate-800/80">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-2xl mb-14">
+        <span class="text-brand-400 text-xs font-mono uppercase tracking-widest block mb-2">Engagements</span>
+        <h2 class="text-3xl font-bold text-white tracking-tight">Flexible, pragmatic collaboration models.</h2>
+        <p class="text-slate-400 mt-2">No heavy agency contracts or junior staffing handoffs. Transparent structures aligned with your technical milestones.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-8 rounded-xl bg-surface-900 border border-slate-800 flex flex-col justify-between">
+          <div>
+            <div class="text-slate-500 font-mono text-xs mb-3">01 // TARGETED SPRINT</div>
+            <h4 class="text-xl font-bold text-white mb-3">Architecture & Health Audit</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              A fixed-scope assessment of your Salesforce org, data model, security boundaries, or integration bottlenecks. Delivers clear findings and an actionable remediation roadmap.
+            </p>
+          </div>
+          <div class="text-xs text-brand-400 font-mono border-t border-slate-800 pt-4">Fixed Scope &bull; Actionable Roadmap</div>
+        </div>
+
+        <div class="p-8 rounded-xl bg-surface-900 border border-brand-500/50 relative hero-glow flex flex-col justify-between">
+          <div class="absolute -top-3 right-6 bg-brand-400 text-surface-950 text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded">
+            Most Popular
+          </div>
+          <div>
+            <div class="text-brand-400 font-mono text-xs mb-3">02 // ADVISORY RETAINER</div>
+            <h4 class="text-xl font-bold text-white mb-3">Fractional Systems Lead</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              A reserved monthly block of hours providing senior architectural reviews, security sounding board support, vendor vetting, and hands-on guidance for your internal developers.
+            </p>
+          </div>
+          <div class="text-xs text-brand-400 font-mono border-t border-slate-800 pt-4">Reserved Capacity &bull; Direct Priority Access</div>
+        </div>
+
+        <div class="p-8 rounded-xl bg-surface-900 border border-slate-800 flex flex-col justify-between">
+          <div>
+            <div class="text-slate-500 font-mono text-xs mb-3">03 // PROTOTYPING & BUILD</div>
+            <h4 class="text-xl font-bold text-white mb-3">AI & Solution Prototyping</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              From evaluating AI business viability to rapidly building working custom software prototypes, agentic flows, API bridges, and specialized Salesforce extensions.
+            </p>
+          </div>
+          <div class="text-xs text-brand-400 font-mono border-t border-slate-800 pt-4">Milestone Delivery &bull; Complete Documentation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section (Zero-AV-Risk Direct Contact Form) -->
+  <section id="contact" class="py-24 relative bg-grid">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="bg-surface-900 border border-slate-800 rounded-2xl p-8 md:p-12 shadow-2xl">
+        <div class="max-w-xl mx-auto text-center mb-8">
+          <span class="text-brand-400 text-xs font-mono uppercase tracking-widest block mb-2">Direct Inquiry</span>
+          <h2 class="text-3xl font-bold text-white tracking-tight">Let's discuss your technical goals.</h2>
+          <p class="text-slate-400 mt-2 text-sm leading-relaxed">
+            Fill out the form below to initiate an inquiry. Your message will open directly in your preferred email client with all details formatted and ready to send.
+          </p>
+        </div>
+
+        <!-- Contact Form -->
+        <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4 max-w-lg mx-auto">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="form-name" class="block text-xs font-mono text-slate-300 mb-1.5">YOUR NAME</label>
+              <input 
+                type="text" 
+                id="form-name" 
+                required 
+                placeholder="Jane Doe" 
+                class="w-full px-4 py-2.5 bg-surface-950 border border-slate-700/80 rounded-lg text-white text-sm focus:outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400 transition" 
+              />
+            </div>
+            <div>
+              <label for="form-email" class="block text-xs font-mono text-slate-300 mb-1.5">YOUR EMAIL</label>
+              <input 
+                type="email" 
+                id="form-email" 
+                required 
+                placeholder="jane@company.com" 
+                class="w-full px-4 py-2.5 bg-surface-950 border border-slate-700/80 rounded-lg text-white text-sm focus:outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400 transition" 
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="form-topic" class="block text-xs font-mono text-slate-300 mb-1.5">PRIMARY TOPIC</label>
+            <select 
+              id="form-topic" 
+              class="w-full px-4 py-2.5 bg-surface-950 border border-slate-700/80 rounded-lg text-white text-sm focus:outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400 transition"
+            >
+              <option value="Enterprise Salesforce Architecture">Enterprise Salesforce Architecture</option>
+              <option value="AI Strategy & Custom Software">AI Strategy & Custom Software</option>
+              <option value="IT Security & IAM Posture">IT Security & IAM Posture</option>
+              <option value="Integration & Data Architecture">Integration & Data Architecture</option>
+              <option value="Fractional Advisory / General">Fractional Advisory / Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="form-message" class="block text-xs font-mono text-slate-300 mb-1.5">PROJECT SUMMARY OR GOALS</label>
+            <textarea 
+              id="form-message" 
+              rows="4" 
+              required 
+              placeholder="Tell me a bit about your current architecture, timeline, or technical challenges..." 
+              class="w-full px-4 py-2.5 bg-surface-950 border border-slate-700/80 rounded-lg text-white text-sm focus:outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400 transition resize-none"
+            ></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-2">
+            <button 
+              type="submit" 
+              id="submit-btn"
+              class="w-full py-3 px-5 bg-brand-400 hover:bg-brand-500 text-surface-950 font-semibold text-xs uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-2 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <i data-lucide="send" class="w-4 h-4" id="submit-icon"></i>
+              <span id="submit-label">Send Message</span>
+            </button>
+          </div>
+
+          <!-- Status Message Feedback -->
+          <div id="form-feedback" class="text-center text-xs font-mono mt-3 hidden p-3 rounded-lg border"></div>
+        </form>
+
+        <div class="mt-8 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 max-w-lg mx-auto">
+          <div class="flex items-center gap-2">
+            <i data-lucide="shield-check" class="w-4 h-4 text-brand-400"></i>
+            <span>Zero third-party trackers &bull; 100% Private</span>
+          </div>
+          <button onclick="copyEmail()" type="button" 
+            class="hover:text-slate-200 inline-flex items-center gap-1.5 font-mono text-[11px] bg-surface-950 px-2.5 py-1 rounded border border-slate-800 transition">
+            <i data-lucide="copy" class="w-3 h-3 text-brand-400"></i>
+            <span id="email-text">hello@scarhillsolutions.com</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 bg-surface-950 py-12 text-sm text-slate-500">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center">
+          <img 
+            src="ScarHillSolutions2_2.png" 
+            alt="Scar Hill Solutions" 
+            class="site-logo h-8 w-auto object-contain"
+            onerror="handleLogoError(this, 'footer')" 
+          />
+        </div>
+        <div class="flex flex-col">
+          <span class="text-slate-300 font-semibold tracking-tight leading-none">Scar Hill Solutions LLC</span>
+          <span class="text-[10px] text-slate-500 font-mono mt-0.5">Enterprise Architecture & AI Advisory</span>
+        </div>
+      </div>
+
+      <div class="text-xs text-slate-500 text-center sm:text-right">
+        <p>&copy; <span id="year"></span> Scar Hill Solutions LLC. All rights reserved.</p>
+        <p class="mt-0.5 text-slate-600">Salesforce Architecture &bull; Custom AI & LLM Systems &bull; Pragmatic IT Security</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Auto set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Logo resolution & in-canvas preview handler
+    function handleLogoError(imgEl, context) {
+      // Check if user already loaded a preview image in this browser session
+      const cached = sessionStorage.getItem('shs_preview_logo');
+      if (cached) {
+        imgEl.src = cached;
+        return;
+      }
+
+      // Chain of common filenames if primary doesn't load immediately
+      if (!imgEl.dataset.fallbackStep) {
+        imgEl.dataset.fallbackStep = '1';
+        imgEl.src = 'ScarHillSolutions2_2.jpg';
+      } else if (imgEl.dataset.fallbackStep === '1') {
+        imgEl.dataset.fallbackStep = '2';
+        imgEl.src = 'ScarHillSolutions2.png';
+      } else if (imgEl.dataset.fallbackStep === '2') {
+        imgEl.dataset.fallbackStep = '3';
+        imgEl.src = 'ScarHillSolutions.png';
+      } else {
+        imgEl.onerror = null;
+        if (context === 'hero') {
+          imgEl.src = 'https://placehold.co/260x260/080b11/2ec49a?text=Scar+Hill+Solutions';
+          const hint = document.getElementById('preview-hint');
+          if (hint) hint.classList.remove('hidden');
+        } else if (context === 'header') {
+          imgEl.src = 'https://placehold.co/180x44/080b11/2ec49a?text=SCAR+HILL';
+        } else {
+          imgEl.src = 'https://placehold.co/140x36/080b11/2ec49a?text=Scar+Hill';
+        }
+      }
+    }
+
+    // Interactive local preview loader for canvas testing
+    function previewLocalLogo(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const dataUrl = e.target.result;
+          sessionStorage.setItem('shs_preview_logo', dataUrl);
+          document.querySelectorAll('.site-logo').forEach(img => {
+            img.src = dataUrl;
+          });
+          const hint = document.getElementById('preview-hint');
+          if (hint) hint.classList.add('hidden');
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // Apply cached preview if present on page refresh
+    window.addEventListener('DOMContentLoaded', () => {
+      const cached = sessionStorage.getItem('shs_preview_logo');
+      if (cached) {
+        document.querySelectorAll('.site-logo').forEach(img => {
+          img.src = cached;
+        });
+      }
+    });
+
+    // Contact form mailto and Gmail direct compose handlers
+    const RECIPIENT_EMAIL = "hello@scarhillsolutions.com";
+
+    // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbySefx8oIJlH0jrTEvBLV8DEgCFEDYF2Fv33-1_9j5HYjKPST6kESWZlg1APV20Wj_bcQ/exec";
+
+    function getFormValues() {
+      const name = document.getElementById('form-name').value.trim();
+      const email = document.getElementById('form-email').value.trim();
+      const topic = document.getElementById('form-topic').value;
+      const message = document.getElementById('form-message').value.trim();
+
+      const subject = `Consulting Inquiry: ${topic} - ${name || 'Prospective Client'}`;
+      const body = `Hi Keith,\n\nName: ${name}\nEmail: ${email}\nTopic: ${topic}\n\nProject Overview:\n${message}\n\n--\nSent via Scar Hill Solutions Website`;
+
+      return { name, email, topic, message, subject, body };
+    }
+
+    async function handleFormSubmit(event) {
+      event.preventDefault();
+      const { name, email, topic, message, subject, body } = getFormValues();
+      const submitBtn = document.getElementById('submit-btn');
+      const submitLabel = document.getElementById('submit-label');
+
+      // If Google Apps Script URL has not been plugged in yet, fallback to default email client
+      if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "") {
+        const mailtoUrl = `mailto:${RECIPIENT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoUrl;
+        showFeedback("Opening your default email app to send your message...", "info");
+        return;
+      }
+
+      // Submit directly to Google Apps Script in the background
+      submitBtn.disabled = true;
+      submitLabel.textContent = "Sending...";
+
+      try {
+        // Sending as text/plain prevents CORS preflight issues with Google Apps Script
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify({ name, email, topic, message })
+        });
+
+        showFeedback("Thank you! Your message has been sent successfully.", "success");
+        document.getElementById('contact-form').reset();
+      } catch (err) {
+        console.error("Submission error:", err);
+        showFeedback("There was an issue sending the message. Please contact directly via hello@scarhillsolutions.com", "error");
+      } finally {
+        submitBtn.disabled = false;
+        submitLabel.textContent = "Send Message";
+        lucide.createIcons();
+      }
+    }
+
+    function showFeedback(msg, type = "info") {
+      const feedback = document.getElementById('form-feedback');
+      feedback.textContent = msg;
+      feedback.className = "text-center text-xs font-mono mt-3 p-3 rounded-lg border block";
+
+      if (type === "success") {
+        feedback.classList.add("bg-brand-500/10", "border-brand-500/40", "text-brand-400");
+      } else if (type === "error") {
+        feedback.classList.add("bg-red-500/10", "border-red-500/40", "text-red-400");
+      } else {
+        feedback.classList.add("bg-surface-850", "border-slate-700", "text-slate-300");
+      }
+
+      setTimeout(() => {
+        feedback.className = "hidden";
+      }, 7000);
+    }
+
+    // Copy email helper function with iframe-safe fallback
+    function copyEmail() {
+      const email = document.getElementById('email-text').innerText;
+      const el = document.createElement('textarea');
+      el.value = email;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      const emailLabel = document.getElementById('email-text');
+      const originalText = emailLabel.innerText;
+      emailLabel.innerText = "Copied to clipboard!";
+      setTimeout(() => {
+        emailLabel.innerText = originalText;
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
